@@ -1,0 +1,17 @@
+graph TD
+  subgraph Toll [ETL Toll Data Pipeline]
+    A[tolldata.tgz] --> B[unzip_data]
+    B --> C[extract_data_from_csv]
+    B --> D[extract_data_from_tsv]
+    B --> E[extract_data_from_fixed_width]
+    C & D & E --> F[consolidate_data]
+    F --> G[PostgreSQL\ncar_details table]
+  end
+
+  subgraph AccessLog [Server Access Log Pipeline]
+    H[Public URL\nWeb server log] --> I[download]
+    I --> J[extract\nfields 1 & 4]
+    J --> K[transform\nlowercase]
+    K --> L[load\ncaptilized.txt]
+    L --> M[check\nprint output]
+  end
